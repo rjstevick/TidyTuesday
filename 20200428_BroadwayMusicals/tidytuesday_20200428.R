@@ -2,7 +2,7 @@
 # TidyTuesday 2020 week 18
 # RJS updated 4/28/2020
 
-# Load libraries ------------------
+# Load libraries ---------------------
 
 library(tidyverse)
 library(scales)
@@ -10,15 +10,15 @@ sessionInfo()
 
 theme_set(theme_light())
 
-# Load data -----------------------
+# Load data --------------------------
 
 grosses_raw <- readr::read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2020/2020-04-28/grosses.csv')
 pre_1985_starts <- readr::read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2020/2020-04-28/pre-1985-starts.csv')
 
 
-# Data formatting & analysis ------
+# Data formatting & analysis ---------
 
-# Add in year column
+# Add in year column from the date stamp
 grosses_raw$week_char<-as.character(grosses_raw$week_ending)
 grosses<-grosses_raw %>%
   separate(week_char,into=c("year","month","date"), sep="-", remove = FALSE)
@@ -30,13 +30,14 @@ newplaydates<-grosses %>%
   summarise(showstart=min(week_ending)) %>%
   # order it
   arrange(showstart)
+# Add in year column from the date stamp
 newplaydates$showstart_char<-as.character(newplaydates$showstart)
 newplaysyears<-newplaydates %>% 
   separate(showstart_char,into=c("year","month","date"), sep="-") %>%
   select(show, year) %>% 
   group_by(year)
 
-#add in pre-1985 starts - it's a mess!
+# Add in pre-1985 starts - it's a mess!
 pre_1985_starts$start_date_char<-as.character(pre_1985_starts$start_date)
 pre_1985_years<-pre_1985_starts %>% 
   separate(start_date_char,into=c("preyear","month","date"), sep="-") %>%
@@ -69,7 +70,7 @@ allshowsnew<-
   # subtract new shows from total shows
   mutate(totalold=sumshows-totalnew)
 
-# ok but there's some years missing!? fill them in...
+# Okay but there's some years missing!? fill them in...
 yearframe<-data.frame(year=as.character(1975:2020))
 # fill with the value above
 allshowsnewcompl<-full_join(allshowsnew, yearframe) %>%
@@ -91,7 +92,7 @@ plot1<-ggplot(showsperyear, aes(x=as.numeric(year), y=sumshows))+
   scale_x_continuous("Year",expand = c(0,0),  breaks = seq(1974, 2020, 4)) +
   scale_y_continuous("Number of shows playing",expand = c(0,0),  limits=c(0,90))+
   theme(panel.grid.minor = element_blank(), panel.border = element_rect(color="lightgrey"),
-        title = element_text(color="grey25"),
+        title = element_text(color="grey25"), plot.background = element_blank(),
         legend.position = c(0.1, 0.85), legend.title = element_blank(),
         legend.background = element_rect(fill=NA), 
         legend.text = element_text(size=14))+
@@ -103,12 +104,14 @@ plot2<-ggplot(allshowsnewcomplgath, aes(x=as.numeric(year), y=number, fill=oldne
   scale_x_continuous("Year",expand = c(0,0), breaks = seq(1974, 2020, 4)) +
   scale_y_continuous("Percent of shows playing",expand = c(0,0), labels = percent_format())+
   theme(panel.grid.minor = element_blank(), panel.border = element_rect(color="lightgrey"),
-        title = element_text(color="grey25"),
+        title = element_text(color="grey25"), plot.background = element_blank(),
         legend.position = c(0.9, 0.2), legend.title = element_blank(),
         legend.text = element_text(size=12))+
   labs(title="But most Broadway shows are from previous years!")
 
-#800x550
+
+# Saving --------------------------
+
 cowplot::plot_grid(plot1, plot2,
                    align="hv", nrow=2, ncol=1)
-
+ggsave("BroadwayShows_plot.png", bg="transparent", width = 8, height = 5.5, dpi=400)
