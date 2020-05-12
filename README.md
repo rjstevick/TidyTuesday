@@ -1,13 +1,12 @@
 # TidyTuesday challenge code and plots
 
-### A weekly data project in R from the R4DS online learning community
+**A weekly data project in R from the R4DS online learning community**
+https://github.com/rfordatascience/tidytuesday/
 
-https://github.com/rfordatascience/tidytuesday
-
-The #tidytuesday project is a weekly data project aimed at the `R` ecosystem. An emphasis will be placed on understanding how to summarize and arrange data to make meaningful charts with `ggplot2`, `tidyr`, `dplyr`, and other tools in the `tidyverse` ecosystem.
+> The #tidytuesday project is a weekly data project aimed at the `R` ecosystem. An emphasis will be placed on understanding how to summarize and arrange data to make meaningful charts with `ggplot2`, `tidyr`, `dplyr`, and other tools in the `tidyverse` ecosystem.
 
 ## Contents
-#### My analyses and visualization of the datasets are organized by week. Each folder contains an Rscript and a png image.
+**My analyses and visualization of the datasets are organized by week. Each folder contains an Rscript and a png image.**
 
 | Year | Week | Date | Data | Source | Article | My code and plot |
 | :---: | :---: | :---: | :--- | :--- | :--- | :--- |
