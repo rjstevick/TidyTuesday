@@ -2,42 +2,35 @@
 # TidyTuesday 2020 week 21
 # RJS updated 5/19/2020
 
-# Load libraries ---------------------
-
+# Load libraries
 library(tidyverse)
-library(ggalt)
-library(ggtext)
-library(patchwork)
-
 sessionInfo()
 theme_set(theme_light())
 
-# Load data --------------------------
-
+# Load data
 vb_matches <- readr::read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2020/2020-05-19/vb_matches.csv', guess_max = 76000)
 
-
-# Data formatting & analysis ---------
-
-vb_locations<- vb_matches %>%
-  gather(c(w_p1_country, w_p2_country, l_p1_country, l_p2_country),
-         key="player", value="player_country") %>%
+# Data formatting & analysis % plotting in one step!! 
+vb_matches %>%
+  # put all player countries into one column named "player_country"
+  gather(c(w_p1_country, w_p2_country, 
+           l_p1_country, l_p2_country),
+         key="player", 
+         value="player_country") %>%
+  # group by the country columns
   group_by(country, player_country)  %>%
-  count() %>% drop_na() %>% ungroup()
-
-# define scale so the outlier isn't too obnoxious
-vb_locations$ncolors <- cut(vb_locations$n, 
-                            breaks=c(0,10,25,50,75,100,125,150,175,200,1000,25000,50000,
-                                     max(vb_locations$n)),
-                            labels=c(10,25,50,75,100,125,150,175,200,1000,25000,50000,
-                                     max(vb_locations$n)))
-
-# Plotting ---------------------------
-
-ggplot(vb_locations, 
-       aes(y=reorder(country,-n), 
+  # count number of combos per country:player_country
+  count() %>% 
+  # clean up variable
+  drop_na() %>% ungroup() %>%
+  # define scale so the outlier isn't too obnoxious
+  mutate(ncolors=cut(n, breaks=c(0,10,25,50,75,100,125,150,175,200,1000,25000,50000,max(n)),
+                      labels=c(10,25,50,75,100,125,150,175,200,1000,25000,50000,max(n)))) %>%
+  # Plotting
+  ggplot(aes(y=reorder(country,-n), 
            x=reorder(player_country,-n),
-           size=ncolors, color=ncolors))+
+           size=ncolors, 
+           color=ncolors))+
   geom_point(alpha=0.8)+
   scale_colour_viridis_d(option = "plasma") +
   theme(axis.text.x=element_text(angle=90, hjust=1),
@@ -51,7 +44,5 @@ ggplot(vb_locations,
        title = "Where do beach volleyball players come from and where do they play?",
        subtitle = "The most common combo is from the USA, playing in the USA")
 
-  
 # Saving -----------------------------
-
-ggsave("BeachVolleyball_plot.png", bg="transparent", width = 12, height = 7, dpi=400)
+ggsave("BeachVolleyball_plot.png", bg="transparent", width = 12, height = 6.5, dpi=400)
