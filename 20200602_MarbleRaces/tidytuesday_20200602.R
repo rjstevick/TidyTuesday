@@ -1,9 +1,8 @@
-# Marble races - top 3 ggbump
+# Marble races - top 3 teams ggbump plot
 # TidyTuesday 2020 week 23
 # Rebecca Stevick updated 6/2/2020
 
-# Load libraries ---------------------
-
+# Load libraries
 library(tidyverse)
 library(ggbump)
 
@@ -16,25 +15,24 @@ marbles %>%
   group_by(race) %>%
   # make a new rank column per race group
   mutate(rank = rank(time_s, ties.method = "random")) %>%
-  # select only the top 3 marbles
+  # select only the top 3 teams per race
   filter(rank <= 3) %>%
   # plotting time!
   ggplot(aes(x=race,
              # make the y-axis a factor and flip it
              y=reorder(as.factor(rank),-rank),
-             # need to define group for the colors
+             # need to define group for the colors for ggbump
              color=team_name, group=team_name))+
   # add ggbump lines
   geom_bump(size = 2, alpha=0.8)+
-  # remove extra white space
-  scale_y_discrete(expand=c(0.1,0.1))+
   # add points since they look like marbles!
   geom_point(size = 6, alpha=0.8) +
+  # remove extra white space
+  scale_y_discrete(expand=c(0.1,0.1))+
   # remove the background lines
   cowplot::theme_minimal_grid(font_size = 14, line_size = 0) +
   # and edit the theme
-  theme(legend.position="bottom",
-        panel.grid.major = element_blank(),
+  theme(legend.position="bottom", panel.grid.major = element_blank(),
         text = element_text(size=18, color="grey30"),
         axis.text.x = element_text(color="grey10", face="bold"),
         plot.caption = element_text(size=12, color="grey50"))+
