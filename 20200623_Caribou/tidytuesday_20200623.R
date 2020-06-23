@@ -8,13 +8,15 @@ library(ggmap)
 library(PNWColors)
 library(lubridate)
 library(gganimate)
+library(showtext)
+
 theme_set(theme_minimal())
 
 # Load data
 individuals <- readr::read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2020/2020-06-23/individuals.csv')
 locations <- readr::read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2020/2020-06-23/locations.csv')
 
-# Add a new column with year and season combined
+# Add a new column with year and season combined for animation
 locations<- locations %>%
   # pull out year from timestamp
   mutate(year=year(timestamp)) %>% 
@@ -55,7 +57,7 @@ plotstat<-
         # change the size and color of the legend title
         legend.title = element_text(size=11),
         # make the main title bigger
-        title = element_text(size=16),
+        plot.title = element_text(size=16, family="HoltwoodOneSC"),
         # make the caption smaller and more grey
         plot.caption = element_text(size=12, color="grey50"),
         # transparent background
@@ -70,7 +72,8 @@ plotstat<-
 #animate map based on year and season
 plotanimate<-plotstat+
   transition_manual(frames=factor(yearseason, levels=unique(yearseason)), cumulative = FALSE)+
-  ggtitle("Caribou locations over time: {current_frame}")
+  # Add title with year/season shown
+  ggtitle("Where did the caribou roam in {current_frame}?")
 
 
 # Saving -----------------------------
@@ -78,7 +81,9 @@ plotanimate<-plotstat+
 # render animation
 animate(plot = plotanimate, 
         nframes = length(unique(locations$yearseason)), 
-        fps = 2, end_pause = 8, height = 433, width =800)
+        fps = 2, end_pause = 8,
+        #define size and resolution of the gif
+        height = 6, width = 12, units = "in", res = 100)
 
 # save the animation
 anim_save("Caribou_plot.gif")
