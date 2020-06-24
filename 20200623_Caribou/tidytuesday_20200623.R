@@ -19,7 +19,7 @@ locations <- readr::read_csv('https://raw.githubusercontent.com/rfordatascience/
 # Add a new column with year and season combined for animation
 locations<- locations %>%
   # pull out year from timestamp
-  mutate(year=year(timestamp)) %>% 
+  mutate(year=year(timestamp)) %>%
   # order dataframe by year
   arrange(year) %>%
   # make new column with year and season
@@ -29,21 +29,21 @@ locations<- locations %>%
 plotstat<-
   # load in the map data
   get_stamenmap(bbox = make_bbox(lat=c(52,58), lon=c(-132, -118)),
-              crop = TRUE, zoom = 6) %>% 
+              crop = TRUE, zoom = 6) %>%
   # plot the map and set the coordinates
   ggmap() + coord_equal()+
   # add the caribou locations as hexes
-  geom_hex(data=locations, aes(x=longitude, y=latitude), 
+  geom_hex(data=locations, aes(x=longitude, y=latitude),
            # make 5 bins for every lat/long
            binwidth = c(0.15, 0.15),
            # make the hexes a little transparent
            alpha=0.8,
            # add thin white borders to hexes
-           color="white", lwd=0.2)+
+           color=alpha("white", 0.8), lwd=0.2)+
   # change the color scheme
-  scale_fill_gradientn(colours=rev(pnw_palette("Moth", 10)), 
+  scale_fill_gradientn(colours=rev(pnw_palette("Moth", 10)),
                        # change to log scale so it's easier to see changes
-                       trans="log", 
+                       trans="log",
                        # define where the labels/breaks are on the legend
                        breaks=c(1, 20, 400, 8000))+
   # fix where the legend is and its format
@@ -72,6 +72,8 @@ plotstat<-
 #animate map based on year and season
 plotanimate<-plotstat+
   transition_manual(frames=factor(yearseason, levels=unique(yearseason)), cumulative = FALSE)+
+  # Leave faded hexes on the map
+  #shadow_trail(alpha = 0.1)+
   # Add title with year/season shown
   ggtitle("Where did the caribou roam in {current_frame}?")
 
@@ -79,8 +81,8 @@ plotanimate<-plotstat+
 # Saving -----------------------------
 
 # render animation
-animate(plot = plotanimate, 
-        nframes = length(unique(locations$yearseason)), 
+animate(plot = plotanimate,
+        nframes = length(unique(locations$yearseason)),
         fps = 2, end_pause = 8,
         #define size and resolution of the gif
         height = 6, width = 12, units = "in", res = 100)
