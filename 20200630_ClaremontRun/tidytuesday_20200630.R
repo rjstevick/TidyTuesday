@@ -38,21 +38,19 @@ ggplot(flyinghugging, aes(x=fly, y=hug))+
   # add diamond points for each character
   geom_point(shape=18, size=6, 
              # highlight characters who hug more than 20 times
-             color=ifelse(flyinghugging$hug > 20, "royalblue3", "gray43"))+
+             color=ifelse(flyinghugging$hug > 20, "royalblue3", "gray60"))+
   # add regression line
-  geom_smooth(method="lm", color="black", alpha=0.3)+
+  geom_smooth(method="lm", color="red3", fill="red2", alpha=0.1)+
   # show regression equation, R2 and p-value
-  stat_regline_equation(label.x = 24, label.y=3) + stat_cor(label.x=24, label.y=2)+
-  # add label for Storm
-  geom_label(aes(x = 24, y = 21, label = "Storm \n(Ororo Munroe)"),alpha=0, hjust = 1, vjust = 0.5, lineheight = 0.8, colour = "#555555", label.size = NA, size = 4)+
-  # add arrow for Storm
-  geom_curve(aes(x = 24, y = 21, xend = 27, yend = 22), colour = "#555555", size=0.5, curvature = -0.2,arrow = arrow(length = unit(0.03, "npc")))+
-  # add label for Shadowcat
-  geom_label(aes(x = 5, y = 21, label = "Ariel/Sprite/Shadowcat \n(Kitty Pryde)"), alpha=0, hjust = 0, vjust = 0.5, lineheight = 0.8, colour = "#555555", label.size = NA, size = 4)+
-  # add arrow for Shadowcat
-  geom_curve(aes(x = 5, y = 21, xend = 3, yend = 23), colour = "#555555", size=0.5, curvature = -0.3,arrow = arrow(length = unit(0.03, "npc")))+
+  stat_regline_equation(label.x = 24, label.y=12, color="red3") + stat_cor(label.x=24, label.y=11, color="red3")+
+  # add label and arrow for Storm
+  geom_label(aes(x = 24, y = 21, label = "Storm \n(Ororo Munroe)"),alpha=0, hjust = 1, vjust = 0.5, lineheight = 0.8, colour = "gray70", label.size = NA, size = 4)+
+  geom_curve(aes(x = 24, y = 21, xend = 27, yend = 22), colour = "gray70", size=0.5, curvature = -0.2, arrow = arrow(length = unit(0.03, "npc")))+
+  # add label and arrow for Shadowcat
+  geom_label(aes(x = 5, y = 21, label = "Ariel/Sprite/Shadowcat \n(Kitty Pryde)"), alpha=0, hjust = 0, vjust = 0.5, lineheight = 0.8, colour = "gray70", label.size = NA, size = 4)+
+  geom_curve(aes(x = 5, y = 21, xend = 3, yend = 23), colour = "gray70", size=0.5, curvature = -0.3,arrow = arrow(length = unit(0.03, "npc")))+
   # change the overall theme
-  theme_ipsum()+
+  theme_ft_rc()+
   # edit the text sizes
   theme(plot.title=element_text(size=20),plot.subtitle = element_text(color="royalblue", face="bold"), axis.title.x = element_text(size=14, face="bold"), axis.title.y = element_text(size=14, face="bold"), plot.caption = element_text(size=12))+
   # add those labels
@@ -63,4 +61,4 @@ ggplot(flyinghugging, aes(x=fly, y=hug))+
 
 
 # Saving -----------------------------
-ggsave("ClaremontRun_plot.png", bg="transparent", width = 12, height = 6.5, dpi=400)
+ggsave("ClaremontRun_plot.png", width = 12, height = 6.5, dpi=400)
