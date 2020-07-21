@@ -20,20 +20,19 @@ animal_complaints <- tuesdata$animal_complaints
 animal_complaints %>%
   # separate date column into month and year
   separate(col="Date Received",sep=" ", into=c("Month","Year")) %>%
-  # group by month and animal and calculate the number of complaints per animal/month/year
+  # group and calculate the number of complaints per animal/month/year
   group_by(Year, Month, `Animal Type`) %>% count() %>% 
   # calculate the mean per animal/month
   group_by(Month, `Animal Type`) %>% summarise(meancomplaints=mean(n)) %>%
-  # divid mean complaints by 20 for the waffle
+  # divide mean complaints by 20 for the waffle
   mutate(meancomplaints20=round(meancomplaints/20)) %>% ungroup() %>%
   # add levels to Month so it plots in order
   mutate(Month=factor(Month, levels=c("January","February","March","April","May","June","July",
                                       "August","September","October","November","December"))) %>%
   # time to plot! use example here: https://github.com/hrbrmstr/waffle
-  ggplot(aes(label=`Animal Type`, values=meancomplaints20))+
+  ggplot(aes(label=`Animal Type`, colour = `Animal Type`, values=meancomplaints20))+
   # add pictogram for each animal type
-  geom_pictogram(n_rows = 10, aes(colour = `Animal Type`), size=3, flip = TRUE, 
-                 family = "fontawesome") +
+  geom_pictogram(n_rows = 10, size=3, flip = TRUE, family = "FontAwesome5Brands-Regular") +
   # separate plots by month
   facet_wrap(~Month, ncol=4)+
   # define colors and pictograms
