@@ -1,1 +1,1 @@
-![Astronauts_plot.png](Astronauts_plot.png)
+![AustralianAnimals_plot.png](AustralianAnimals_plot.png)

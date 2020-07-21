@@ -4,58 +4,47 @@
 
 # Load libraries
 library(tidyverse)
-library(nationalparkcolors) #devtools::install_github("katiejolly/nationalparkcolors")
 library(hrbrthemes)
+library(waffle) # devtools::install_github("hrbrmstr/waffle")
+library(ggtext)
+
+# to get the glyphs to work for the pictogram. help from here https://www.r-craft.org/r-news/quick-hit-waffle-1-0-font-awesome-5-pictograms-and-more/
+# install_fa_fonts(); extrafont::font_import(); extrafont::loadfonts(quiet = TRUE)
+# extrafont::fonttable() %>% as_tibble() %>% filter(grepl("Awesom", FamilyName)) %>% select(afmfile, FullName, FamilyName, FontName)
 
 # Load data
 tuesdata <- tidytuesdayR::tt_load('2020-07-21')
-animal_outcomes <- tuesdata$animal_outcomes
 animal_complaints <- tuesdata$animal_complaints
 
-
 # Let's get piping!
-astronauts %>%
-  # select the top 2 countries (US and Russia) and lump all others into "Others"
-  mutate(nationalityother=fct_lump(f=nationality, n=2, other_level="Others")) %>%
-  # make new column with the cleaned spacecraft name. Extract the word before a " " or a "-"in the ascend_shuttle column
-  mutate(spacecraft=str_extract(ascend_shuttle, "[^ |-]+")) %>%
-  # remove any mission numbers in the spacecraft column
-  mutate(spacecraft=str_extract(spacecraft, "[:alpha:]+")) %>%
-  # fix some of the names
-  mutate(spacecraft=recode(spacecraft, "gemini"="Gemini", "soyuz"="Soyuz", "apollo"="Apollo",
-                           "ASTP"="Apollo-Soyuz", "STS"="Space Shuttle", "MA"="Mercury-Atlas")) %>%
-  # count number of astronauts per year and nationality and arrange
-  group_by(year_of_mission, nationalityother, spacecraft) %>% count() %>% arrange(desc(n)) %>%
-  # plot year on x-axis and number of missions on y-axis
-  ggplot(aes(x=year_of_mission, y=n,
-             # fill by nationality, in order of abundance
-             fill=factor(nationalityother,levels=unique(nationalityother)),
-             # outline color by spacecraft
-             color=spacecraft))+
-  # add rounded bar graph (chicklets)
-  geom_chicklet(width=0.7, lwd=1)+
-  # edit the breaks on x-axis
-  scale_x_continuous(breaks=scales::pretty_breaks(n=20))+
-  # change fill colors using national park palettes
-  scale_fill_manual(values=c(park_palette("Saguaro", 3)))+
-  # change outline colors
-  scale_color_manual(values=rev(RColorBrewer::brewer.pal(n = 11, name = "Set3")))+
-  # edit the theme
-  theme_ipsum()+ theme(legend.position = c(0.2,0.78), legend.direction = "horizontal",
-                       plot.background = element_rect(fill="gray60", color="transparent"),
-                       panel.grid.minor = element_blank())+
-  # put the legend titles on top
-  guides(fill=guide_legend(position=1, title.position="top"),
-         # the chicklet outlines were tricky... this is the only way I could get colors to show up
-         color=guide_legend(title.position="top", override.aes = list(fill=rev(c("white",RColorBrewer::brewer.pal(n = 11, name = "Set3"))))))+
+animal_complaints %>%
+  # separate date column into month and year
+  separate(col="Date Received",sep=" ", into=c("Month","Year")) %>%
+  # group by month and animal and calculate the number of complaints per animal/month/year
+  group_by(Year, Month, `Animal Type`) %>% count() %>% 
+  # calculate the mean per animal/month
+  group_by(Month, `Animal Type`) %>% summarise(meancomplaints=mean(n)) %>%
+  # divid mean complaints by 20 for the waffle
+  mutate(meancomplaints20=round(meancomplaints/20)) %>% ungroup() %>%
+  # add levels to Month so it plots in order
+  mutate(Month=factor(Month, levels=c("January","February","March","April","May","June","July",
+                                      "August","September","October","November","December"))) %>%
+  # time to plot! use example here: https://github.com/hrbrmstr/waffle
+  ggplot(aes(label=`Animal Type`, values=meancomplaints20))+
+  # add pictogram for each animal type
+  geom_pictogram(n_rows = 10, aes(colour = `Animal Type`), size=3, flip = TRUE, 
+                 family = "fontawesome") +
+  # separate plots by month
+  facet_wrap(~Month, ncol=4)+
+  # define colors and pictograms
+  scale_label_pictogram(name=NULL, values = c("cat","dog"), labels = c("Cat","Dog")) +
+  scale_color_manual(name = NULL,values = c("#a40000", "#c68958"), labels = c("Cat","Dog")) +
+  # set theme
+  theme_ipsum_rc(grid="") + theme_enhance_waffle()+theme(legend.position = "none", plot.subtitle = element_markdown(lineheight = 0.5), strip.text = element_text(face="bold"))+
   # add those labels
-  labs(title= "Space Race! Astronaut missions peaked in 1985.",
-       subtitle="Number of astronaut missions each year are colored by nationality. Outline color indicates which spacecraft used for ascent. 948/1277 missions were U.S. astronauts in the Space Shuttle.",
-       x="Year of Mission", y="Number of astronauts", fill="Astronaut Nationality (fill)", color="Ascent Spacecraft Used (outline)",
-       caption = "Data from Corlett, Stavnichuk & Komarova. Life Sciences in Space Research (2020).
-       Plot by @rjstevick for #TidyTuesday")
-
-
+  labs(title= "Average animal complaints per month in Australia (1999-2017)",
+       subtitle="Each <span style='color:#c68958;'>**dog**</span> or <span style='color:#a40000;'>**cat**</span> represents 20 complaints",
+       caption = "Source: Royal Society for the Prevention of Cruelty to Animals | Plot by @rjstevick for #TidyTuesday")
 
 # Saving -----------------------------
-ggsave("AustralianAnimals_plot.png", width = 14, height = 7, dpi=400)
+ggsave("AustralianAnimals_plot.png", width = 5, height = 2, dpi=400)
