@@ -7,6 +7,7 @@ library(tidyverse)
 library(hrbrthemes)
 library(waffle) # devtools::install_github("hrbrmstr/waffle")
 library(ggtext)
+library(extrafont)
 
 # to get the glyphs to work for the pictogram. help from here https://www.r-craft.org/r-news/quick-hit-waffle-1-0-font-awesome-5-pictograms-and-more/
 # install_fa_fonts(); extrafont::font_import(); extrafont::loadfonts(quiet = TRUE)
@@ -32,18 +33,20 @@ animal_complaints %>%
   # time to plot! use example here: https://github.com/hrbrmstr/waffle
   ggplot(aes(label=`Animal Type`, colour = `Animal Type`, values=meancomplaints20))+
   # add pictogram for each animal type
-  geom_pictogram(n_rows = 10, size=3, flip = TRUE, family = "FontAwesome5Brands-Regular") +
+  geom_pictogram(n_rows = 7, size=3, flip = TRUE, family = "FontAwesome5Free-Solid") +
   # separate plots by month
   facet_wrap(~Month, ncol=4)+
   # define colors and pictograms
-  scale_label_pictogram(name=NULL, values = c("cat","dog"), labels = c("Cat","Dog")) +
-  scale_color_manual(name = NULL,values = c("#a40000", "#c68958"), labels = c("Cat","Dog")) +
-  # set theme
-  theme_ipsum_rc(grid="") + theme_enhance_waffle()+theme(legend.position = "none", plot.subtitle = element_markdown(lineheight = 0.5), strip.text = element_text(face="bold"))+
+  scale_label_pictogram(name=NULL, values = c("cat","dog")) +
+  scale_color_manual(name = NULL,values = c("#a40000", "#c68958")) +
+  # set themes
+  theme_ipsum(grid="") + theme_enhance_waffle()+
+  theme(legend.position = "none", plot.subtitle = element_markdown(lineheight = 0.5), 
+        strip.text = element_text(face="bold"))+
   # add those labels
-  labs(title= "Average animal complaints per month in Australia (1999-2017)",
-       subtitle="Each <span style='color:#c68958;'>**dog**</span> or <span style='color:#a40000;'>**cat**</span> represents 20 complaints",
+  labs(title= "Average animal complaints per month in Australia",
+       subtitle="Each <span style='color:#c68958;'>**dog**</span> or <span style='color:#a40000;'>**cat**</span> represents 20 complaints (1999-2017)",
        caption = "Source: Royal Society for the Prevention of Cruelty to Animals | Plot by @rjstevick for #TidyTuesday")
 
 # Saving -----------------------------
-ggsave("AustralianAnimals_plot.png", width = 5, height = 2, dpi=400)
+ggsave("AustralianAnimals_plot.png", bg="transparent", width = 9, height = 6, dpi=400)
