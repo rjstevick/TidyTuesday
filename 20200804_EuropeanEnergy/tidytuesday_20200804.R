@@ -6,7 +6,6 @@
 library(tidyverse)
 library(hrbrthemes)
 library(treemapify)
-library(nationalparkcolors)
 
 # Load data
 tuesdata <- tidytuesdayR::tt_load('2020-08-04')
@@ -19,28 +18,31 @@ tuesdata$energy_types %>%
   drop_na(value, country_name) %>% filter(level=="Level 1" & year=="2018") %>% 
   # sum up the energy generated per country
   group_by(country) %>% mutate(sumValue=sum(value)) %>% ungroup() %>% 
-  # make a new column with only the top 22 producing countries, label the others as "Others"
-  mutate(countryOther=forcats::fct_lump_n(f=country_name, w=sumValue, other_level="Others", n=22)) %>% 
+  # make a new column with only the top 20 generating countries, label the others as "Others"
+  mutate(countryOther=forcats::fct_lump_n(f=country_name, w=sumValue, other_level="All other \ncountries", n=20)) %>% 
   # time to plot
   ggplot(aes(area = value, # area of each square is the energy generated per country/type
              fill = factor(type, levels=unique(type)), # keep the order of energy so that Other is last
              label = type, subgroup = countryOther))+
   # add the tree map and add borders between countries
   geom_treemap(color = "gray20") + geom_treemap_subgroup_border(color = "gray90", lwd=5)+
-  # change the fill colors - based on rev(park_palette("CraterLake", n=7))
+  # change the fill colors - based on nationalparkcolors::park_palette("CraterLake", n=7)
   scale_fill_manual(values = c("#4E7147", "#BE9C9D", "#376597","#7DCCD3", "#DBA662", "#9888A5", "#F7ECD8"))+ 
   # edit the text colors and sizes
   geom_treemap_text(aes(family=font_rc_light), colour = "gray75", place = "topleft", reflow = FALSE, size = 10)+
-  geom_treemap_subgroup_text(aes(family=font_rc), col = 'white', size = 26) +
+  geom_treemap_subgroup_text(aes(family=font_rc), col = 'white', 
+                             # fit the text to the box so its size is relative to energy generation
+                             grow = TRUE, padding.y = grid::unit(3, "mm"),padding.x = grid::unit(3, "mm")) +
   # change theme and position the legend
   theme_ipsum_rc()+theme(legend.position = c(0.78,1.1), legend.direction = "horizontal")+
   # add labels
   labs(fill=NULL, title="European Energy Generation in 2018",
-       subtitle="each area is proportional to energy generated per type & country in GWh (Gigawatt hours)", 
+       subtitle="each area is proportional to energy generated per type & country in GWh (Gigawatt hours)
+       the top 20 countries are shown - all others are grouped together as \"All other countries\"", 
        caption="data from Eurostat Energy | plot by @rjstevick for #TidyTuesday")
 
 # Saving -----------------------------
-ggsave("EuropeanEnergy_plot.png", bg = "transparent", width = 12, height = 6, dpi = 400)
+ggsave("EuropeanEnergy_plot.png", bg = "transparent", width = 12, height = 7, dpi = 400)
 
 
 
@@ -50,7 +52,7 @@ tuesdata$energy_types %>%
   pivot_longer(names_to= "year", values_to="value", `2016`:`2018`) %>%
   drop_na(value, country_name) %>% filter(level=="Level 1" & year=="2018") %>% 
   group_by(country) %>% mutate(sumValue=sum(value)) %>% ungroup() %>% 
-  mutate(countryOther=forcats::fct_lump_n(f=country_name, w=sumValue, other_level="Others", n=20)) %>% 
+  mutate(countryOther=forcats::fct_lump_n(f=country_name, w=sumValue, other_level="All other countries", n=20)) %>% 
   treemap(index=c("countryOther", "type"),
           vSize = "value",  vColor="type", type="categorical",
           palette=c("#4E7147", "#BE9C9D", "#376597","#7DCCD3", "#DBA662", "#9888A5", "#F7ECD8"),
