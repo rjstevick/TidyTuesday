@@ -8,6 +8,7 @@ library(ggtext)
 library(nationalparkcolors)
 library(waffle)
 library(hrbrthemes)
+library(extrafont)
 extrafont::loadfonts()
 
 # Load data
@@ -21,21 +22,25 @@ tuesdata$threats %>%
   # time to plot!
   ggplot(aes(label = threat_type, colour = threat_type, values = n5))+
   # add pictogram for each threat type
-  geom_waffle(n_rows = 8, size = 3, flip = TRUE, family = "FontAwesome5Free-Solid")+
+  geom_pictogram(n_rows = 8, size=4, flip = TRUE, family = "FontAwesome5Free-Solid") +
   # separate plots by continent
   facet_wrap(~continent, ncol = 7)+
   # define colors and pictograms
-  scale_label_pictogram(name = NULL, values = c("cat","dog"))+
+  scale_label_pictogram(name = NULL, values = c("tractor", "tree", "thermometer-three-quarters", "city", 
+                                                "lightbulb","cubes", "female", "leaf", 
+                                                "house-damage", "smog", "road", "question"))+
   scale_color_manual(name = NULL, values = c(park_palette("Saguaro", n=6), park_palette("SmokyMountains", n=6)))+
   # set themes
   theme_ipsum(grid = "") + theme_enhance_waffle()+
   theme(legend.position = "bottom", strip.text = element_text(face="bold"),
-        plot.subtitle = element_markdown(lineheight = 0.5))+
+        plot.subtitle = element_markdown(lineheight = 0.5),
+        panel.background = element_rect(fill="grey80", color="transparent"),
+        panel.spacing.x = unit(0.5, "lines"))+
   # add those labels
-  labs(title = "Threatened: ",
-       subtitle = "Threats to plant species by continent. Each symbol represents 5 species",
+  labs(title = "Threatened: Why are plants in danger on each continent?",
+       subtitle = "The greatest number of threatened species are in Africa, where the greatest threat is <span style='color:#847CA3;'>Agriculture & Aquaculture</span>. Each symbol represents 5 species.",
        caption = "data from International Union for Conservation of Nature (IUCN) | plot by @rjstevick for #TidyTuesday")
 
 
 # Saving -----------------------------
-ggsave("ExtinctPlants_plot.png", width = 10, height = 6, dpi = 400)
+ggsave("ExtinctPlants_plot.png", width = 12, height = 6, bg="transparent",dpi = 400)
