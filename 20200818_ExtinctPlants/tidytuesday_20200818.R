@@ -14,20 +14,23 @@ extrafont::loadfonts()
 # Load data
 tuesdata <- tidytuesdayR::tt_load('2020-08-18')
 
+# Analysis and plotting
 tuesdata$threats %>%
+  # select only rows with data
   filter(threatened == 1) %>%
+  # sum up number of threats per type and continent
   group_by(continent, threat_type) %>% count() %>%
   # divide numbers by 5 for the waffle
   mutate(n5=round(n/5)) %>% ungroup() %>%
   # time to plot!
   ggplot(aes(label = threat_type, colour = threat_type, values = n5))+
-  # add pictogram for each threat type
-  geom_pictogram(n_rows = 8, size=4, flip = TRUE, family = "FontAwesome5Free-Solid") +
-  # separate plots by continent
+  # add pictogram for each threat type. define rows and size of pictogram
+  geom_pictogram(n_rows = 8, size = 4, flip = TRUE, family = "FontAwesome5Free-Solid") +
+  # separate plots by continent. put all panels in one row
   facet_wrap(~continent, ncol = 7)+
   # define colors and pictograms
-  scale_label_pictogram(name = NULL, values = c("tractor", "tree", "thermometer-three-quarters", "city", 
-                                                "lightbulb","cubes", "female", "leaf", 
+  scale_label_pictogram(name = NULL, values = c("tractor", "tree", "thermometer-three-quarters", "city",
+                                                "lightbulb", "cubes", "female", "leaf",
                                                 "house-damage", "smog", "road", "question"))+
   scale_color_manual(name = NULL, values = c(park_palette("Saguaro", n=6), park_palette("SmokyMountains", n=6)))+
   # set themes
