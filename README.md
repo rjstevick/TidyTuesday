@@ -6,8 +6,7 @@ https://github.com/rfordatascience/tidytuesday/
 > The #tidytuesday project is a weekly data project aimed at the `R` ecosystem. An emphasis will be placed on understanding how to summarize and arrange data to make meaningful charts with `ggplot2`, `tidyr`, `dplyr`, and other tools in the `tidyverse` ecosystem.
 
 ## Contents
-**My analyses and visualization of the datasets are organized by week. Each folder contains an Rscript and the resulting plot/graph/animation.  
-Click on the image to go to its code.**
+**My analyses and visualization of the datasets are organized by week. Each folder contains an Rscript and the resulting plot/graph/animation. Click on the image to go to its code.**
 
 ### 2020
 

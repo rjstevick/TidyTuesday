@@ -5,9 +5,9 @@
 # Load libraries
 library(tidyverse)
 library(hrbrthemes)
+library(widyr)
 library(tidygraph)
 library(ggraph)
-library(nationalparkcolors)
 library(patchwork)
 
 # Load data
@@ -16,7 +16,6 @@ chopped <- tuesdata$chopped
 
 # My first attempt at a network in awhile!
 # Unfortunately, the ingredients aren't really connected and this got out of hand pretty quickly...
-# not the best code, but it gets the job done.
 
 # List of most common dessert ingredients (occuring in >9 episodes)
 topingredients <- chopped %>%
@@ -36,62 +35,39 @@ barplot<-ggplot(topingredients, aes(x = n, y = reorder(dessert,-n))) +
         axis.title.x = element_text(size=12), legend.position="none",
         plot.margin =  unit(c(0,0,0,0), "cm"))+
   labs(x="Number of episodes", y=NULL)
-# and I should've just stopped here :)
-
 
 # Network of which ingredients are paired with the most common ingredients
-# Make full table of all episodes with the top ingredients included
-full_table<-chopped %>%
+comboingredientsgraph<-chopped %>%
   select(series_episode, dessert) %>%
-  separate(dessert, sep=", ", into=c("a1", "a2", "a3", "a4")) %>%
-  filter(a1 %in% topingredients$dessert | a2 %in% topingredients$dessert |
-           a3 %in% topingredients$dessert | a4 %in% topingredients$dessert)
-
-# Make pairs of all ingredients for each episode
-comboingredients<-
-  full_table[1:3] %>%
-  full_join(full_table[c(1,2,4)], by=c("a1"="a1","a2"="a3", "series_episode"="series_episode")) %>%
-  full_join(full_table[c(1,3,4)], by=c("a1"="a2","a2"="a3", "series_episode"="series_episode")) %>%
-  full_join(full_table[c(1,2,5)], by=c("a1"="a1","a2"="a4", "series_episode"="series_episode")) %>%
-  full_join(full_table[c(1,3,5)], by=c("a1"="a2","a2"="a4", "series_episode"="series_episode")) %>%
-  full_join(full_table[c(1,4,5)], by=c("a1"="a3","a2"="a4", "series_episode"="series_episode")) %>%
-  drop_na(a1, a2) %>% group_by(G1 = pmin(a1, a2), G2 = pmax(a1, a2)) %>% 
-  add_tally(name="comboN") %>% mutate(comboN=as.character(comboN)) %>% arrange(desc(comboN))
-
-# Get the top ingredient in the first column and build graph object
-graphframe<-
-  comboingredients %>%
-  full_join(topingredients, by=c("G1"="dessert")) %>%
-  full_join(topingredients, by=c("G2"="dessert")) %>%
-  mutate(n=coalesce(n.x, n.y)) %>%
-  mutate(topingredient=coalesce(topingredient.x, topingredient.y)) %>%
-  mutate(pairedingredient=case_when(is.na(topingredient.x) ~ G1,
-                                    is.na(topingredient.y) ~ G2,
-                                    TRUE ~ "other")) %>%
-  drop_na(topingredient) %>% ungroup() %>%
-  select(topingredient, pairedingredient, topingredient, series_episode) %>%
-  drop_na() %>% mutate(topingred=topingredient) %>%
-  as_tbl_graph() %>% activate(nodes) %>% 
-  mutate(Popularity = centrality_power()) %>% mutate(Popularitycut=cut_interval(Popularity, n = 2))
+  separate_rows(dessert, sep=", ") %>%
+  # Make pairs of all ingredients for each episode
+  pairwise_count(dessert, series_episode, sort=TRUE, upper=FALSE) %>% 
+  # Get the top ingredient in the first column
+  full_join(topingredients, by=c("item1"="dessert")) %>%
+  full_join(topingredients, by=c("item2"="dessert")) %>%
+  mutate(topingredient=coalesce(topingredient.x, topingredient.y)) %>% drop_na(topingredient) %>% 
+  mutate(pairedingredient=case_when(is.na(topingredient.x) ~ item1, is.na(topingredient.y) ~ item2, TRUE ~ "other")) %>%
+  # Build graph object
+  select(topingredient, pairedingredient) %>%
+  as_tbl_graph() %>% mutate(Popularity = centrality_power()) %>% mutate(Popularitycut=cut_interval(Popularity, n = 2))
 
 # Plot the network
-graph<-ggraph(graphframe, layout="gem")+ # delete layout="gem" for default graph
-  geom_edge_link(aes(color = node1.name,
-                     start_cap = label_rect(node1.name), end_cap = label_rect(node2.name)),
-                 show.legend = FALSE, width = 0.5, arrow = arrow(length = unit(2, 'mm'))) +
+graph<-ggraph(comboingredientsgraph, layout="fr")+ 
+  geom_edge_link(aes(color = node1.name, start_cap = label_rect(node1.name), end_cap = label_rect(node2.name)),
+                 show.legend = FALSE, width = 0.5, arrow = arrow(length = unit(1.5, 'mm'))) +
   geom_node_text(aes(label = name, color = Popularitycut, size=Popularitycut), show.legend = FALSE) +
-  scale_colour_manual(values=c("grey50","black")) + scale_size_manual(values=c(2,2.5)) +
+  scale_colour_manual(values=c(alpha("grey50",0.6),"black")) + scale_size_manual(values=c(2,2.5)) +
   scale_edge_colour_manual(values=c("purple4","navyblue","burlywood3","aquamarine4",
                                     "cadetblue2","coral2","darkgoldenrod2","darkred"))+
-  theme(plot.margin =  unit(c(0,0,0,0), "cm"))
+  theme(plot.margin =  unit(c(0,0,0,0), "cm"), axis.text.x=element_blank(), axis.text.y=element_blank(), 
+        axis.title.x = element_blank(), axis.title.y = element_blank())
 
 # Patchwork of barplot and network together
-theme_set(theme_minimal())
-barplot + graph+
-  plot_annotation(title="Top dessert ingredients in Chopped",
-       subtitle="Blackberries are the most common ingredient. Ingredients are rarely repeated together!",
-       caption="data from Kaggle | plot by @rjstevick for #TidyTuesday")+
-  plot_layout(ncol = 2, widths = c(1, 3))
+theme_set(theme_ipsum(grid = ""))
+barplot + graph + 
+  plot_annotation(title="Top dessert ingredients in Chopped are never used together.",
+                  subtitle="Blackberries are the most common ingredient. Ingredients are rarely repeated together!",
+                  caption="data from Kaggle | plot by @rjstevick for #TidyTuesday")
 
 # Saving -----------------------------
 ggsave("Chopped_plot.png", bg = "transparent", width = 12, height = 6, dpi = 400)
