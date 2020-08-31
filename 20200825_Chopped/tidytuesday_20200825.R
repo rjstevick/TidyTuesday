@@ -1,6 +1,6 @@
 # Chopped TV Show network
 # TidyTuesday 2020 week 35
-# Rebecca Stevick updated 8/27/2020
+# Rebecca Stevick updated 8/31/2020
 
 # Load libraries
 library(tidyverse)
@@ -67,7 +67,8 @@ theme_set(theme_ipsum(grid = ""))
 barplot + graph + 
   plot_annotation(title="Top dessert ingredients in Chopped are never used together.",
                   subtitle="Blackberries are the most common ingredient. Ingredients are rarely repeated together!",
-                  caption="data from Kaggle | plot by @rjstevick for #TidyTuesday")
+                  caption="data from Kaggle | plot by @rjstevick for #TidyTuesday")+
+  plot_layout(ncol = 2, widths = c(1, 3))
 
 # Saving -----------------------------
 ggsave("Chopped_plot.png", bg = "transparent", width = 12, height = 6, dpi = 400)
