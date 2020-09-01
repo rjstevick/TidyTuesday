@@ -6,6 +6,7 @@
 library(tidyverse)
 library(geofacet)
 library(ggimage)
+library(extrafont)
 
 # Load data --------------------
 tuesdata <- tidytuesdayR::tt_load('2020-09-01')
@@ -51,26 +52,27 @@ world_countries_grid1_edit<-world_countries_grid1 %>%
 # Plotting ---------------------
 
 # Plot sum total potatoes grown over time in the world
-globalpotatoplot<-potatocountries %>%
+globalpotatoplot2<-potatocountries %>%
   group_by(Decade) %>%
   summarise(globalpotatoes=sum(Potatoes)) %>%
-  ggplot(aes(x=Decade, y=0)) +
-  geom_point(aes(color=globalpotatoes, size=globalpotatoes/2000))+
-  geom_image(aes(image=potato, size=globalpotatoes/150000),
-             by="height")+scale_size_identity()+
-  geom_text(aes(label=Decade), nudge_y=-0.003, size=2.2)+
-  scale_color_gradient2(name="Global potatoes (tons per hectare per decade)", low="bisque3", high="#6e6355")+
-  scale_y_continuous(expand=c(0,0), limits=c(-0.01, 0.01))+
-  theme_void()+theme(legend.position = c(0.5, 0.7), legend.direction = "horizontal",
-                     legend.key.width = unit(1.7, "cm"), legend.key.height = unit(0.3, "cm"),
-                     text=element_text(size=8))+
-                     guides(color = guide_colourbar(title.position="top", title.hjust = 0.5))
+  ggplot(aes(x=Decade, y=globalpotatoes, fill=globalpotatoes)) +
+  geom_col(alpha=0.8)+
+  geom_text(aes(label=Decade), nudge_y=800, size=3,family="Titillium Web")+
+  scale_fill_gradient(low="#6e6355", high="#423b33")+
+  theme_classic()+
+  labs(x=NULL,y="Global potatoes \n(tons per hectare per decade)")+
+  theme(legend.position = "none", 
+        text=element_text(size=10,color="#423b33",family="Titillium Web"),
+        axis.line = element_blank(), axis.text.x = element_blank(),
+        axis.ticks = element_blank(), panel.background = element_rect(fill="transparent"),
+        panel.grid.major.y = element_line(color="bisque3"))
 
 # Plot potatoes grown over time on the world grid
 geofacetplot<-potatocountries %>%
   ggplot(aes(x=Decade, y=0, fill=Potatoes)) + geom_tile()+
   # add country name on top of mini heatmaps
-  geom_text(aes(x="1986-1995", label=Code), size=4, color="darkolivegreen", family="Arial Narrow")+
+  geom_text(aes(x="1986-1995", label=Code), size=4, 
+            color="darkolivegreen", family="Titillium Web")+
   # change fill color
   scale_fill_gradient2(name="Potatoes (tons per hectare per decade)", low="bisque3", high="#6e6355")+
   # remove extra space on y-axis
@@ -80,14 +82,14 @@ geofacetplot<-potatocountries %>%
   # add blank theme
   theme_void()+
   # edit plot theme
-  theme(plot.title = element_text(size=32, family="Arial Narrow", face="bold", color="#423b33"),
-        plot.subtitle = element_text(size=18, family="Arial Narrow", color="#423b33"),
-        plot.caption = element_text(size=12, family="Arial Narrow", color="#423b33"),
-        strip.text = element_blank(), legend.position = c(0.8,0.9), legend.direction = "horizontal",
-        legend.key.width = unit(1, "cm"))+
+  theme(plot.title = element_text(size=32, family="Titillium Web", face="bold", color="#423b33"),
+        plot.subtitle = element_text(size=18, family="Titillium Web", color="#423b33"),
+        plot.caption = element_text(size=12, family="Titillium Web", color="#423b33"),
+        strip.text = element_blank(), legend.position = c(0.75,0.9), legend.direction = "horizontal",
+        legend.key.width = unit(1, "cm"), text=element_text(size=8,color="#423b33",family="Titillium Web"))+
         guides(fill = guide_colourbar(title.position="top", title.hjust = 0.5))+
   # add those labels
-  labs(title="Global potato production is increasing around the world",
+  labs(title="Global potato production is increasing",
        subtitle="Each mini heatmap indicates the total potato production in each country per decade (1955-2015)",
        caption="data from Our World in Data | plot by @rjstevick for #TidyTuesday")
 
@@ -98,8 +100,11 @@ qplot(1:10, 1:10, color=I("transparent"))+theme_void() +
   annotation_custom(grob = ggplotGrob(geofacetplot),
     xmin = -Inf, xmax = Inf, ymin = -Inf, ymax = Inf) +
   # then inset the global potato plot on the bottom left
-  annotation_custom(grob = ggplotGrob(globalpotatoplot),
-    xmin = 1, xmax = 3.5, ymin = 0, ymax = 3.5)
+  annotation_custom(grob = ggplotGrob(globalpotatoplot2),
+    xmin = 0.5, xmax = 3.6, ymin = 0.3, ymax = 3.5)
+  # and add a potato
+ # geom_image(aes(x=9.7, y=9.3, image=potato), size=0.16)+scale_size_identity()
+ # geom_image(aes(x=3, y=2.2, image=potato), size=0.18)+scale_size_identity()
 
 # Saving -----------------------
 ggsave("GlobalCropYields_plot.png", bg = "transparent", width = 12, height = 6.5, dpi = 400)
