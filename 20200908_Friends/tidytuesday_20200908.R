@@ -17,8 +17,8 @@ friends_emotions <- tuesdata$friends_emotions %>%
   left_join(friends)
 
 # make a dataframe for each arrow data with the facet included
-dataross<-data.frame(x=1,xend=1.3,y=340,yend=303,emotion="Scared")
-datajoey<-data.frame(x=1.1,xend=0.82,y=270,yend=210,emotion="Mad")
+arrowross<-data.frame(x=1,xend=1.3,y=340,yend=303,emotion="Scared")
+arrowjoey<-data.frame(x=1.1,xend=0.82,y=270,yend=210,emotion="Mad")
 
 friends_emotions %>%
   # select only main characters
@@ -34,24 +34,23 @@ friends_emotions %>%
   # change color scheme
   scale_fill_manual(values=c("#ff4238", "#ffDC00", "#42A2D6", "#9a0006", "#fff580"))+
   # add label and arrow for Ross
-  geom_label(data=dataross, aes(x=x,y=y, label = "Ross is the \nmost scared"),inherit.aes=FALSE, alpha=0, hjust = 1, vjust = 0.5, lineheight = 0.8, family="Tahoma", color="white", label.size = NA, size = 4)+
-  geom_curve(data=dataross, aes(x=x,y=y,yend=yend,xend=xend),inherit.aes=FALSE,  color="white", size=0.5, curvature = -0.2, arrow = arrow(length = unit(0.08, "npc")))+
+  geom_label(data=arrowross, aes(x=x,y=y, label = "Ross is the \nmost scared"),inherit.aes=FALSE, alpha=0, hjust = 1, vjust = 0.5, lineheight = 0.8, family="Tahoma", color="white", label.size = NA, size = 4)+
+  geom_curve(data=arrowross, aes(x=x,y=y,yend=yend,xend=xend),inherit.aes=FALSE,  color="white", size=0.5, curvature = -0.2, arrow = arrow(length = unit(0.08, "npc")))+
   # add label and arrow for Joey
-  geom_label(data=datajoey, aes(x=x,y=y, label = "Joey is the \nleast mad"),inherit.aes=FALSE, alpha=0, hjust = 0.2, vjust = 0, lineheight = 0.8, family="Tahoma", color="white", label.size = NA, size = 4)+
-  geom_curve(data=datajoey, aes(x=x,y=y,yend=yend,xend=xend),inherit.aes=FALSE,  color="white", size=0.5, curvature = 0.2, arrow = arrow(length = unit(0.08, "npc")))+
+  geom_label(data=arrowjoey, aes(x=x,y=y, label = "Joey is the \nleast mad"),inherit.aes=FALSE, alpha=0, hjust = 0.2, vjust = 0, lineheight = 0.8, family="Tahoma", color="white", label.size = NA, size = 4)+
+  geom_curve(data=arrowjoey, aes(x=x,y=y,yend=yend,xend=xend),inherit.aes=FALSE,  color="white", size=0.5, curvature = 0.2, arrow = arrow(length = unit(0.08, "npc")))+
   # change up the theme
   theme_minimal()+
   theme(plot.background = element_rect("black"), text=element_text(family="Friends", color="white"),
         axis.text.y = element_text(family="Tahoma", color="white"), plot.caption = element_text(family="Tahoma", color="white", size=11),
-        plot.title = element_text(family="Friends", color="white", size=24, hjust=0.5),
+        plot.title = element_text(family="Friends", color="white", size=28, hjust=0.5),
         axis.text.x = element_blank(), axis.ticks = element_line(color="black"),
         panel.grid.major.x = element_blank(), panel.grid.minor.y = element_blank(), 
-        strip.text = element_text(family="Friends", color="white", size=12),
-        legend.position = "top")+
+        strip.text = element_text(family="Friends", color="white", size=12), legend.position = "top")+
   # add those labels
   labs(title="The one with the emotional friends",
        caption="data from friends R package (Emil Hvitfeldt) | plot by @rjstevick for #TidyTuesday",
-       x=NULL, y="Number of times emotion expressed",fill=NULL)
+       x=NULL, y="Number of times emotion expressed", fill=NULL)
 
 # Saving -----------------------
 ggsave("Friends_plot.png", width = 12, height = 6.5, dpi = 400)
