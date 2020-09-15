@@ -1,1 +1,1 @@
-![GovKidSpending_plot.png](GovKidSpending_plot.png)
+![GovKidSpending_plot.gif](GovKidSpending_plot.gif)
