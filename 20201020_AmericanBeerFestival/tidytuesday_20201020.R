@@ -1,4 +1,4 @@
-# Great American Beet Festival
+# Great American Beer Festival map/pictogram
 # TidyTuesday 2020 week 43
 # Rebecca Stevick updated 10/20/2020
 
@@ -29,7 +29,7 @@ tuesdata$beer_awards %>%
   mutate(num = row_number(), x_pos = (num - 1) %/% 8, y_pos = 8 - (num - 1) %% 8 - 1) %>%
   # time to plot
   ggplot(aes(x=x_pos, y=y_pos, colour=medal)) + 
-  # add the icons as points
+  # add the icons as points, select fa-beer as the icon
   geom_text(family = 'fontawesome-webfont', label=fontawesome("fa-beer"), size=3) +
   # make a panel for each state in its geographical location (relatively)
   facet_geo(~state) + 
