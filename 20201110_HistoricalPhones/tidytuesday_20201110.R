@@ -26,9 +26,9 @@ tuesdata$mobile %>% full_join(tuesdata$landline) %>%
   # change the overal theme
   theme_minimal() +
   # edit the theme
-  theme(text = element_text(family = "Andale Mono"), strip.text = element_text(face = "bold"),
-        axis.text.x = element_blank(), legend.position = "bottom", plot.caption = element_text(hjust = 0.5, size = 8, color = "#A89F8E"),
-        plot.title = element_text(size = 24), plot.subtitle = element_text(size=9, family = "Avenir-Black", color = "#A89F8E"),
+  theme(text = element_text(family = "Andale Mono"), strip.text = element_text(face = "bold"), panel.grid = element_line(color="white"),
+        axis.text.x = element_blank(), legend.position = "bottom", plot.caption = element_text(hjust = 0.5, size = 8, color = "#8c816c"),
+        plot.title = element_text(size = 24), plot.subtitle = element_text(size=9, family = "Avenir-Black", color = "#8c816c"),
         plot.tag.position = c(0.055, 0.11), plot.tag = element_text(hjust = 1, angle = 60, size = 11)) +
   # add those labels
   labs(title = "Mobile phone plans have replaced landlines over time",
@@ -38,6 +38,6 @@ tuesdata$mobile %>% full_join(tuesdata$landline) %>%
        caption = "data from OurWorldInData.org | plot by @rjstevick for #TidyTuesday")
 
 # Saving -------------------------
-ggsave("HistoricalPhones_plot.png", bg = "transparent", width = 12, height = 7, dpi = 400)
+ggsave("HistoricalPhones_plot.png", bg = "#e8e6e1", width = 12, height = 7, dpi = 400)
 
 
