@@ -4,24 +4,38 @@
 
 # Load libraries -----------------
 library(tidyverse)
+library(ggalt)
+library(lubridate)
+library(ggtext)
+library(hrbrthemes)
 
 # Load data ----------------------
 tuesdata <- tidytuesdayR::tt_load('2020-12-01')
 
 # Analysis and plotting ----------
 tuesdata$shelters %>%
-  group_by(shelter_postal_code) %>% 
-  summarise(sumoccupancy=sum(occupancy),
-            sumcapacity=sum(capacity, na.rm=TRUE),
-            count=n()) %>% 
+  mutate(monthyear = as.yearmon(format(occupancy_date, "%Y-%m"))) %>%
+  group_by(monthyear) %>% 
+  summarise(sumoccupancy=sum(occupancy), sumcapacity=sum(capacity, na.rm=TRUE)) %>% 
   filter(sumcapacity != 0) %>% 
-  mutate(percentcapacity=sumoccupancy/sumcapacity) %>% 
-  ggplot(aes(x=count, y=percentcapacity))+
-  geom_point()
-
+  mutate(diff=sumcapacity-sumoccupancy) %>% 
+  # start plotting
+  ggplot(aes(y = monthyear, 
+             x = sumoccupancy, xend = sumcapacity)) +
+  # add dumbbells based on previous and current prices
+  geom_dumbbell(aes(color=diff), size = 4, shape=16, 
+                colour_x = "#81a9ad", colour_xend = "#2d2926")+
+  # change color scheme
+  scale_color_gradient(low="#f5f5f5", high="#537380")+
+  # change the overall theme and flip axis
+  theme_ipsum()+coord_flip()+
+  # edit the theme
+  theme(legend.position = "none",
+        plot.title = element_markdown(lineheight = 1.1, color="grey50"),
+        plot.subtitle = element_markdown(lineheight = 0.5))+
   # add those labels
-  labs(
+  labs(x=NULL, y=NULL, title="Toronto homeless shelter <span style='color:#2d2926;'>capacity</span> and <span style='color:#81a9ad;'>occupancy</span> have increased over time",
        caption = "data from opendatatoronto | plot by @rjstevick for #TidyTuesday")
 
 # Saving -------------------------
-ggsave("TorontoShelters_plot.png", bg = "transparent", width = 14, height = 8, dpi = 400)
+ggsave("TorontoShelters_plot.png", bg = "transparent", width = 10, height = 5, dpi = 400)
