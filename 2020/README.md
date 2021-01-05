@@ -1,5 +1,4 @@
-
-### 2020
+## 2020
 
 | Week | Date | Data | Source | Link to code and plot |
 | :---: | :----: | :--- | :--- | :--- |
