@@ -30,11 +30,11 @@ tuesdata$`big-mac` %>%
   # change theme
   theme_ipsum() +
   # edit theme
-  theme(legend.position = "none", panel.spacing = unit(0.15, "cm"),
+  theme(legend.position = "none", panel.spacing = unit(0.2, "cm"),
         strip.text = element_text(family="Helvetica Bold", face="bold"),
         axis.text.x = element_text(size=7), axis.text.y = element_text(size=7),
         panel.grid.minor = element_blank(), panel.grid.major = element_blank(), 
-        panel.background=element_rect(fill="#fffced", color="#fcf7dc")) +
+        panel.background=element_rect(fill="#fdf5f5", color="transparent")) +
   # add those labels
   labs(x=NULL, y="Big Mac Index, relative to $USD",
        title="Big Mac Purchasing Power",
