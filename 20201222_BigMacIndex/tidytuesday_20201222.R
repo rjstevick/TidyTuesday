@@ -20,10 +20,11 @@ tuesdata$`big-mac` %>%
   geom_area(stat = "identity") +
   scale_fill_manual(values=c("firebrick4","goldenrod1")) +
   theme_ipsum() +
-  theme(legend.position = "none", panel.spacing = unit(0.1, "cm"),
+  theme(legend.position = "none", panel.spacing = unit(0.15, "cm"),
+        strip.text = element_text(family="Helvetica Bold", face="bold"),
         axis.text.x = element_text(size=7), axis.text.y = element_text(size=7),
         panel.grid.minor = element_blank(), panel.grid.major = element_blank(), 
-        panel.background=element_rect(fill="#fffced", color="transparent")) +
+        panel.background=element_rect(fill="#fffced", color="#fcf7dc")) +
   # add those labels
   labs(x=NULL, y="Big Mac Index, relative to $USD",
        title="Big Mac Purchasing Power",
