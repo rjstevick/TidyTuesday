@@ -11,15 +11,25 @@ tuesdata <- tidytuesdayR::tt_load('2020-12-22')
 
 # Analysis and plotting ----------
 tuesdata$`big-mac` %>% 
+  # remove countries without adjusted costs
   drop_na(usd_adjusted) %>% 
+  # add variable with positive or negative
   mutate(costsign=as.character(sign(usd_adjusted))) %>% 
+  # remove US since it's just 0
   filter(name!="United States") %>% 
+  # start plotting
   ggplot(aes(x=date, y=usd_adjusted, fill=costsign)) +
+  # add panel per country
   facet_wrap(.~name, ncol = 9) + 
+  # add line at x-axis
   geom_hline(yintercept=0)+
-  geom_area(stat = "identity") +
+  # add filled area
+  geom_area() +
+  # change fill color
   scale_fill_manual(values=c("firebrick4","goldenrod1")) +
+  # change theme
   theme_ipsum() +
+  # edit theme
   theme(legend.position = "none", panel.spacing = unit(0.15, "cm"),
         strip.text = element_text(family="Helvetica Bold", face="bold"),
         axis.text.x = element_text(size=7), axis.text.y = element_text(size=7),
