@@ -9,11 +9,22 @@ library(tidyverse)
 tuesdata <- tidytuesdayR::tt_load('2021-01-05')
 
 # Analysis and plotting ----------
-tuesdata$`big-mac` %>%
-
+tuesdata$transit_cost %>%
+  drop_na(country) %>%
+  arrange(desc(tunnel)) %>% head(n = 10L) %>%
+  ggplot(aes(x=tunnel, y=reorder(city,tunnel), fill=country))+
+  geom_col(alpha = 0.8)+
+  geom_text(aes(x=tunnel-10, label = year), size = 7, color="white", family="Baloo")+
+  scale_fill_manual(values = PNWColors::pnw_palette("Starfish", n=8))+
+  scale_x_continuous(expand = c(0,0))+
+  theme_minimal()+
+  theme(text=element_text(family="Baloo"),
+        plot.title = element_text(hjust=0, size=24), plot.caption = element_text(color="grey40"),
+        legend.position = "none", axis.text.y = element_text(size = 14))+
   # add those labels
-  labs(
+  labs(title="Longest transit tunnels in the world",
+       x="Tunnel Length (km)", y=NULL,
        caption = "data from the Transit Costs Project | plot by @rjstevick for #TidyTuesday")
 
 # Saving -------------------------
-ggsave("TransitCostProject_plot.png", bg = "transparent", width = 12, height = 5, dpi = 400)
+ggsave("TransitCostProject_plot.png", bg = "transparent", width = 9, height = 5, dpi = 400)
