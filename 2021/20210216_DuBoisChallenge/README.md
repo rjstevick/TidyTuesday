@@ -1,1 +1,1 @@
-![original-plate-02.jpg](original-plate-02.jpg) ![DuBoisChallenge_plot.png](DuBoisChallenge_plot.png)
+<img src="DuBoisChallenge_plot.png" width="300"></a>   <img src="original-plate-02.jpg" width="300"></a>
