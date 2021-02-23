@@ -33,17 +33,18 @@ tuesdata %>%
   # remove all theme elements and fix the x-y so the map doesn't warp
   theme_void() + coord_fixed(1.3) +
   # define fill colors
-  scale_fill_manual(values = c("#20211c", "#9a8d7d", "#ccbdaa", "#6f543e", "#2c2449", "#bd354d", "#d5afa6", "#dcac41", "#d2c5b2")) +
+  scale_fill_manual(values = c("#20211c", "#9a8d7d", "seashell3", "#6f543e", "#2c2449", "#bd354d", "#d5afa6", "#dcac41", "#d2c5b2")) +
   # edit the theme
-  theme(text = element_text(family = "Charter"), plot.title = element_text(margin = margin(t=5, b = 80), hjust = 0.5, face = "bold"),
+  theme(text = element_text(family = "Charter"), plot.title = element_text(margin = margin(t=10, b = 100), size = 18, hjust = 0.5, face = "bold"),
         plot.caption = element_text(size=8, hjust=0.5, margin = margin(t = 30, unit = "pt")),
+        plot.margin = margin(r = 50, l = 50, unit = "pt"),
         legend.position = "bottom", legend.text = element_text(color = "grey20", margin = margin(r = 40, unit = "pt")))+
   # put legend items in 2 columns
-  guides(fill = guide_legend(ncol = 2)) +
+  guides(fill = guide_legend(ncol = 2,  keyheight = unit(12, units = "mm"), keywidth = unit(12, units = "mm"))) +
   # add those labels
   labs(title = "RELATIVE NEGRO POPULATION OF THE STATES OF THE \nUNITED STATES.", fill = NULL,
        caption = "recreation of W.E.B Du Bois's Plate 2: Relative Negro Population of the States of the United States
        data from Du Bois data challenge | plot by @rjstevick for #TidyTuesday")
 
 # Saving -------------------------
-ggsave("DuBoisChallenge_plot.png", bg = "#dfd3c3", width = 6, height = 7.5, dpi = 400)
+ggsave("DuBoisChallenge_plot.png", bg = "#dfd3c3", width = 7, height = 8.5, dpi = 400)
