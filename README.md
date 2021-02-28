@@ -12,8 +12,9 @@ https://github.com/rfordatascience/tidytuesday/
 ### [2021](2021/)
 
 | Week | Date | Data | Source | Link to code and plot |
-| :---: | :----: | :--- | :--- | :--- |
-| 8 | `2021-02-16` | [W.E.B. Du Bois Challenge](data/2021/2021-02-16/readme.md) | [Du Bois Data Challenge](https://github.com/ajstarks/dubois-data-portraits/tree/master/challenge) | <a href="2021/20210216_DuBoisChallenge/tidytuesday_20210216.R"> <img src="2021/20210216_DuBoisChallenge/DuBoisChallenge_plot.png" width="200"></a>|
+| :---: | :----: | :--- | :--- | :---: |
+| 9 | `2021-02-23` | [Employment and Earnings](https://github.com/rfordatascience/tidytuesday/blob/master/data/2021/2021-02-23/readme.md) | [BLS](https://www.bls.gov/cps/tables.htm#charemp_m) | <a href="2021/20210223_EmploymentEarnings/tidytuesday_20210223.R"> <img src="2021/20210223_EmploymentEarnings/EmploymentEarnings_plot.gif" width="400"></a>|
+| 8 | `2021-02-16` | [W.E.B. Du Bois Challenge](https://github.com/rfordatascience/tidytuesday/blob/master/data/2021/2021-02-16/readme.md) | [Du Bois Data Challenge](https://github.com/ajstarks/dubois-data-portraits/tree/master/challenge) | <a href="2021/20210216_DuBoisChallenge/tidytuesday_20210216.R"> <img src="2021/20210216_DuBoisChallenge/DuBoisChallenge_plot.png" width="200"></a>|
 | 7 | `2021-02-09` | [Wealth and Income](https://github.com/rfordatascience/tidytuesday/blob/master/data/2021/2021-02-09/readme.md) | [Urban Institute](https://apps.urban.org/features/wealth-inequality-charts/) & [US Census](https://www.census.gov/data/tables/time-series/demo/income-poverty/historical-income-households.html) | <a href="2021/20210209_WealthIncome/tidytuesday_20210209.R"> <img src="2021/20210209_WealthIncome/WealthIncome_plot.png" width="400"></a>|
 | 6 | `2021-02-02` | [HBCU Enrollment](https://github.com/rfordatascience/tidytuesday/blob/master/data/2021/2021-02-02/readme.md) | [Data.World](https://data.world/nces/hbcu-fall-enrollment-1976-2015) & [Data.World](https://data.world/nces/high-school-completion-and-bachelors-degree-attainment) | <a href="2021/20210202_HBCUenrollment/tidytuesday_20210202.R"> <img src="2021/20210202_HBCUenrollment/HBCUenrollment_plot.png" width="400"></a>|
 | 5 | `2021-01-26` | [Plastic Pollution](https://github.com/rfordatascience/tidytuesday/blob/master/data/2021/2021-01-26/readme.md) | [Break Free from Plastic](https://www.breakfreefromplastic.org) | <a href="2021/20210126_PlasticPollution/tidytuesday_20210126.R"> <img src="2021/20210126_PlasticPollution/PlasticPollution_plot.png" width="400"></a>|
@@ -25,7 +26,7 @@ https://github.com/rfordatascience/tidytuesday/
 ### [2020](2020/)
 
 | Week | Date | Data | Source | Link to code and plot |
-| :---: | :----: | :--- | :--- | :--- |
+| :---: | :----: | :--- | :--- | :---: |
 | 52 | `2020-12-22` | [Big Mac Index](2020-12-22/readme.md) | [TheEconomist](https://github.com/TheEconomist/big-mac-data) | <a href="2020/20201222_BigMacIndex/tidytuesday_20201222.R"><img src="2020/20201222_BigMacIndex/BigMacIndex_plot.png" width="400"></a>|
 | 51 | `2020-12-15` | [Ninja Warrior](data/2020/2020-12-15/readme.md) | [Data.World](https://data.world/ninja/anw-obstacle-history) | <a href="2020/20201215_NinjaWarrior/tidytuesday_20201215.R"><img src="2020/20201215_NinjaWarrior/NinjaWarrior_plot.png" width="400"></a>|
 | 50 | `2020-12-08` | [Women of 2020](https://github.com/rfordatascience/tidytuesday/blob/master/data/2020/2020-12-08/readme.md) | [BBC](https://www.bbc.com/news/world-55042935) | <a href="2020/20201208_Women2020/tidytuesday_20201208.R"><img src="2020/20201208_Women2020/Women2020_plot.png" width="300"></a>|
