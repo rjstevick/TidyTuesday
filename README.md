@@ -13,6 +13,7 @@ https://github.com/rfordatascience/tidytuesday/
 
 | Week | Date | Data | Source | Link to code and plot |
 | :---: | :----: | :--- | :--- | :---: |
+| 11 | `2021-03-09` | [Bechdel Test](https://github.com/rfordatascience/tidytuesday/blob/master/data/2021/2021-03-09/readme.md) | [FiveThirtyEight](https://github.com/fivethirtyeight/data/tree/master/bechdel) | <a href="2021/20210309_BechdelTest/tidytuesday_20210309.R"> <img src="2021/20210309_BechdelTest/BechdelTest_plot.png" width="400"></a>|
 | 10 | `2021-03-02` | [SuperBowl Ads](https://github.com/rfordatascience/tidytuesday/blob/master/data/2021/2021-03-02/readme.md) | [FiveThirtyEight](https://github.com/fivethirtyeight/superbowl-ads) | <a href="2021/20210302_SuperBowlAds/tidytuesday_20210302.R"> <img src="2021/20210302_SuperBowlAds/SuperBowlAds_plot.png" width="400"></a>|
 | 9 | `2021-02-23` | [Employment and Earnings](https://github.com/rfordatascience/tidytuesday/blob/master/data/2021/2021-02-23/readme.md) | [BLS](https://www.bls.gov/cps/tables.htm#charemp_m) | <a href="2021/20210223_EmploymentEarnings/tidytuesday_20210223.R"> <img src="2021/20210223_EmploymentEarnings/EmploymentEarnings_plot.gif" width="400"></a>|
 | 8 | `2021-02-16` | [W.E.B. Du Bois Challenge](https://github.com/rfordatascience/tidytuesday/blob/master/data/2021/2021-02-16/readme.md) | [Du Bois Data Challenge](https://github.com/ajstarks/dubois-data-portraits/tree/master/challenge) | <a href="2021/20210216_DuBoisChallenge/tidytuesday_20210216.R"> <img src="2021/20210216_DuBoisChallenge/DuBoisChallenge_plot.png" width="200"></a>|
