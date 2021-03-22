@@ -13,6 +13,7 @@ https://github.com/rfordatascience/tidytuesday/
 
 | Week | Date | Data | Source | Link to code and plot |
 | :---: | :----: | :--- | :--- | :---: |
+| 13 | `2021-03-23` | [UN Votes](https://github.com/rfordatascience/tidytuesday/blob/master/data/2021/2021-03-23/readme.md) | [Harvard Dataverse](https://dataverse.harvard.edu/dataset.xhtml?persistentId=hdl:1902.1/12379) | <a href="2021/20210323_UNVotes/tidytuesday_20210323.R"> <img src="2021/20210323_UNVotes/UNVotes_plot.png" width="400"></a>|
 | 12 | `2021-03-16` | [Video Games + Sliced](https://github.com/rfordatascience/tidytuesday/blob/master/data/2021/2021-03-16/readme.md) | [Steam](https://www.kaggle.com/michau96/popularity-of-games-on-steam) | <a href="2021/20210316_VideoGames/tidytuesday_20210316.R"> <img src="2021/20210316_VideoGames/VideoGames_plot.png" width="400"></a>|
 | 11 | `2021-03-09` | [Bechdel Test](https://github.com/rfordatascience/tidytuesday/blob/master/data/2021/2021-03-09/readme.md) | [FiveThirtyEight](https://github.com/fivethirtyeight/data/tree/master/bechdel) | <a href="2021/20210309_BechdelTest/tidytuesday_20210309.R"> <img src="2021/20210309_BechdelTest/BechdelTest_plot.png" width="400"></a>|
 | 10 | `2021-03-02` | [SuperBowl Ads](https://github.com/rfordatascience/tidytuesday/blob/master/data/2021/2021-03-02/readme.md) | [FiveThirtyEight](https://github.com/fivethirtyeight/superbowl-ads) | <a href="2021/20210302_SuperBowlAds/tidytuesday_20210302.R"> <img src="2021/20210302_SuperBowlAds/SuperBowlAds_plot.png" width="400"></a>|
