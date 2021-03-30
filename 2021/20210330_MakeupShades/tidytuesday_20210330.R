@@ -4,21 +4,19 @@
 
 # Load libraries -----------------
 library(tidyverse)
-library(hrbrthemes)
 library(patchwork)
 
 # Load data ----------------------
 tuesdata <- tidytuesdayR::tt_load('2021-03-30')
-allShades <- tuesdata$allShades
-
+allShades <- tuesdata$allShades # use allShades file
 
 # Analysis and plotting ----------
 
 # Make overall palette with one square for each foundation color available
 paletteplot <- allShades %>%
-   # remove the random blue shade
+   # remove the random blue shade? is this for avatar?
    filter(hex != "#4460F3") %>%
-   # count up number of products per hex, then make a row for each
+   # count up number of products per hex, then make a row for each using uncount
    group_by(hex, lightness) %>% count() %>% uncount(n) %>% ungroup() %>%
    # arrange by lightness of the hue
    arrange(desc(lightness)) %>%
@@ -26,7 +24,7 @@ paletteplot <- allShades %>%
    mutate(num = row_number(), x_pos = (num - 1) %/% 62, y_pos = 62 - (num - 1) %% 62 - 1) %>%
    # time to plot
    ggplot(aes(x = x_pos, y = y_pos, fill = hex)) +
-   # add tiles
+   # add tiles outlined in white
    geom_tile(color = "white", lwd = 0.6) +
    # color by hex code and remove extra space on x-axis
    scale_fill_identity() + scale_x_continuous(expand = c(0, 0)) +
@@ -34,7 +32,6 @@ paletteplot <- allShades %>%
    theme_void() + theme(legend.position = "none", plot.caption = element_text(size = 14, family = "Avenir")) +
    # add caption
    labs(caption = "data from The Pudding  |  plot by @rjstevick for #TidyTuesday")
-
 
 # Make header palette with randomly selected (average/representative) palette
 header <- allShades %>% 
@@ -46,24 +43,25 @@ header <- allShades %>%
    full_join(allShades %>% filter(hex != "#4460F3") %>% sample_frac(size = 0.01)) %>%
    # pick only hex and lightness columns, and arrange based on lightness of the hue
    select(hex, lightness) %>% arrange(desc(lightness)) %>% 
+   # add the row number as variable `num`
    mutate(num = row_number()) %>% 
    # time to plot
    ggplot() + 
-   # add tiles sorted by lightness
+   # add tiles sorted by lightness, with black outline
    geom_tile(aes(x = num, y = 1, fill = hex), color = "black", lwd = 1.2) +
-   # add hex code labels
+   # add hex code labels, colored in the reverse direction
    geom_text(aes(x = num, y = 1, label = hex, color=rev(hex)), angle=90)+
-   # add title with "shadow"
+   # add title with "shadow" over the plot as text
    annotate(geom = "text", x = 35.1, y = 0.98, label = "beauty bias palette", family = "Avenir Black", size = 17, color = "black") +
    annotate(geom = "text", x = 35, y = 1, label = "beauty bias palette", family = "Avenir Black", size = 17, color = "white") +
-   # color by hex code and remove extra white space on the x-axis
+   # color tiles and text by hex code, and remove extra white space on the x-axis
    scale_fill_identity() + scale_color_identity() + scale_x_discrete(expand = c(0, 0)) +
    # change global theme, edit caption/subtitle text
    theme_void() + theme(plot.caption = element_text(hjust = 0.5, family = "Avenir", size = 14)) +
    # add subtitle/caption
    labs(caption = "Representation of 6,815 foundation shades available from Sephora or Ulta US. Lighter shades have more diversity and availability.")
 
-# plot header over palette and adjust heights of panels
+# display header over palette and adjust heights of panels
 header/paletteplot+plot_layout(heights=c(1,6))
 
 # Saving -------------------------
