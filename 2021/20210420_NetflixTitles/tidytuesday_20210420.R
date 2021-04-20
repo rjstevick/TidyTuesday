@@ -39,7 +39,7 @@ tuesdata$netflix %>%
    stat_summary(aes(color = seasons, x = 0, y = 0.23, label = listed_in), fun = "mean", geom = "text", 
                 size = 4.4, family = "Bebas Neue", color = "red2", lineheight = 0.8) +
    # define color scheme for points
-   scale_color_gradient(low="grey70", high="white") +
+   scale_color_gradient(low="grey65", high="white") +
    # define size scheme for points
    scale_size_continuous(range = c(0.5, 3)) +
    # define limits for x and y-axis so we can fit the TV in the background
@@ -61,4 +61,4 @@ tuesdata$netflix %>%
    labs(title = "What's on <span style='color:red;'>**Netflix**</span> tonight?", x = NULL, y = NULL)
 
 # Saving -------------------------
-ggsave("NetflixTitles_plot.png", width = 11, height = 7.5, dpi = 400)
+ggsave("NetflixTitles_plot.png", width = 12, height = 7.5, dpi = 400)
