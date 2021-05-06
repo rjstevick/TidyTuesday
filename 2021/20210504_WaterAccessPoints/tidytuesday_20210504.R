@@ -13,19 +13,19 @@ water <- tuesdata$water
 
 # Analysis and plotting ----------
 water %>%
-   filter(lon_deg>=-20 & lon_deg<=50 & lat_deg>=-30 & lat_deg<=40) %>% 
-   replace_na(list(water_source="Unknown")) %>% 
+   filter(lon_deg>=-20 & lon_deg<=50 & lat_deg>=-30 & lat_deg<=40) %>%
+   replace_na(list(water_source="Unknown")) %>%
    mutate(water_source = case_when(
       str_detect(water_source, "Spring") ~ "Spring",
       str_detect(water_source, "Shallow Well") ~ "Shallow Well",
       str_detect(water_source, "Surface Water") ~ "Surface Water",
-      TRUE ~ water_source)) %>% 
+      TRUE ~ water_source)) %>%
    ggplot()+
    geom_sf(data = world %>% filter(continent == "Africa", !is.na(iso_a2)),
            aes(geometry=geom), fill = "grey90", color="white")+
-   geom_hex(aes(x = lon_deg, y = lat_deg, fill = water_source), 
+   geom_hex(aes(x = lon_deg, y = lat_deg, fill = water_source),
             bins = 80, alpha = 0.6)+
-   theme_void() + 
+   theme_void() +
    scale_fill_brewer(palette = "Set3") +
    theme(legend.position = c(0.15, 0.25), title = element_text(family = "Baloo"),
          plot.title = element_text(size = 26))+
