@@ -13,6 +13,7 @@ https://github.com/rfordatascience/tidytuesday/
 
 | Week | Date | Data | Source | Link to code and plot |
 | :---: | :----: | :--- | :--- | :---: |
+| 20 | `2021-05-11` | [US Broadband](https://github.com/rfordatascience/tidytuesday/blob/master/data/2021/2021-05-11/readme.md) | [Microsoft GitHub](https://github.com/microsoft/USBroadbandUsagePercentages) | <a href="2021/20210511_USBroadband/tidytuesday_20210511.R"> <img src="2021/20210511_USBroadband/USBroadband_plot.png" width="400"></a>|
 | 19 | `2021-05-04` | [Water Access Points](https://github.com/rfordatascience/tidytuesday/blob/master/data/2021/2021-05-04/readme.md) | [WPDX](https://www.waterpointdata.org/) | <a href="2021/20210504_WaterAccessPoints/tidytuesday_20210504.R"> <img src="2021/20210504_WaterAccessPoints/WaterAccessPoints_plot.png" width="400"></a>|
 | 18 | `2021-04-27` | [CEO Departures](https://github.com/rfordatascience/tidytuesday/blob/master/data/2021/2021-04-27/readme.md) | [Gentry et al.](https://onlinelibrary.wiley.com/doi/abs/10.1002/smj.3278) | <a href="2021/20210427_CEODepartures/tidytuesday_20210427.R"> <img src="2021/20210427_CEODepartures/CEODepartures_plot.png" width="400"></a>|
 | 17 | `2021-04-20` | [Netflix Titles](https://github.com/rfordatascience/tidytuesday/blob/master/data/2021/2021-04-20/readme.md) | [Kaggle](https://www.kaggle.com/shivamb/netflix-shows) | <a href="2021/20210420_NetflixTitles/tidytuesday_20210420.R"> <img src="2021/20210420_NetflixTitles/NetflixTitles_plot.png" width="400"></a>|
