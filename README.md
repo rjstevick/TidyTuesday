@@ -13,6 +13,7 @@ https://github.com/rfordatascience/tidytuesday/
 
 | Week | Date | Data | Source | Link to code and plot |
 | :---: | :----: | :--- | :--- | :---: |
+| 32 | `2021-08-03` | [Paralympic Medals](https://github.com/rfordatascience/tidytuesday/blob/master/data/2021/2021-08-03/readme.md) | [IPC](https://db.ipc-services.org/sdms/hira) |<a href="2021/20210803_ParalympicMedals/tidytuesday_20210803.R"> <img src="2021/20210803_ParalympicMedals/ParalympicMedals_plot.png" width="400"></a>|
 | 31 | `2021-07-27` | [Olympic Medals](https://github.com/rfordatascience/tidytuesday/blob/master/data/2021/2021-07-27/readme.md) | [Kaggle](https://www.kaggle.com/heesoo37/120-years-of-olympic-history-athletes-and-results) | <a href="2021/20210727_OlympicMedals/tidytuesday_20210727.R"> <img src="2021/20210727_OlympicMedals/OlympicMedals_plot.png" width="400"></a>|
 | 30 | `2021-07-20` | [US Droughts](https://github.com/rfordatascience/tidytuesday/blob/master/data/2021/2021-07-20/readme.md) | [Drought Monitor](https://droughtmonitor.unl.edu/DmData/DataDownload.aspx) | <a href="2021/20210720_USDroughts/tidytuesday_20210720.R"> <img src="2021/20210720_USDroughts/USDroughts_plot.png" width="400"></a>|
 | 29 | `2021-07-13` | [Scooby Doo](https://github.com/rfordatascience/tidytuesday/blob/master/data/2021/2021-07-13/readme.md) | [Kaggle](https://www.kaggle.com/williamschooleman/scoobydoo-complete) |<a href="2021/20210713_ScoobyDoo/tidytuesday_20210713.R"> <img src="2021/20210713_ScoobyDoo/ScoobyDoo_plot.png" width="400"></a>|

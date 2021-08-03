@@ -1,6 +1,6 @@
 # US Scooby Doo
 # TidyTuesday 2021 week 29
-# Rebecca Stevick updated 7/20/2021
+# Rebecca Stevick updated 8/3/2021
 
 # Load libraries -----------------
 library(tidyverse)
@@ -12,17 +12,20 @@ scoobydoo <- tuesdata$scoobydoo
 
 # Analysis and plotting ----------
 scoobydoo %>%
-   select(index, caught_fred:unmask_scooby) %>% 
-   pivot_longer(caught_fred:caught_scooby, names_to="caught", values_to="valuecaught") %>% 
-   pivot_longer(captured_fred:captured_scooby, names_to="captured", values_to="valuecaptured") %>% 
-   pivot_longer(unmask_fred:unmask_scooby, names_to="unmask", values_to="valuemask") %>% 
-   pivot_longer(c(caught, captured, unmask), names_to="type", values_to="charactername") %>% 
-   pivot_longer(c(valuecaught, valuecaptured, valuemask)) %>% 
-   separate(charactername, into=c("type2", "charactername"), sep="_") %>% 
-   group_by(type, charactername) %>% count(value) %>% 
-   filter(value == "TRUE") %>% 
+   # probably the long way to do this... but get all the data organized.
+   select(index, caught_fred:unmask_scooby) %>%
+   pivot_longer(caught_fred:caught_scooby, names_to="caught", values_to="valuecaught") %>%
+   pivot_longer(captured_fred:captured_scooby, names_to="captured", values_to="valuecaptured") %>%
+   pivot_longer(unmask_fred:unmask_scooby, names_to="unmask", values_to="valuemask") %>%
+   pivot_longer(c(caught, captured, unmask), names_to="type", values_to="charactername") %>%
+   pivot_longer(c(valuecaught, valuecaptured, valuemask)) %>%
+   # make new column with just character name
+   separate(charactername, into=c("type2", "charactername"), sep="_") %>%
+   # count number of actions per character
+   group_by(type, charactername) %>% count(value) %>% filter(value == "TRUE") %>%
+   # format the names and actions as sentence case
    mutate(charactername = str_to_sentence(charactername),
-          type = str_to_sentence(type)) %>% 
+          type = str_to_sentence(type)) %>%
    # start plotting
    ggplot(aes(x=n, y=charactername, fill=charactername))+
    # make a panel per action type
@@ -40,7 +43,7 @@ scoobydoo %>%
    theme(legend.position = "none", panel.grid.major.y = element_blank(),
          strip.text = element_text(hjust = 0.5, face = "bold"))+
    # add those labels
-   labs(x = NULL, y = NULL, 
+   labs(x = NULL, y = NULL,
         title = "Caught, Captured, Unmasked: \nWho is the best ghost hunter in Mystery Inc?",
         subtitle = "Number of times each character was captured, caught the monster, or unmasked the culprit",
         caption = "data from Kaggle | plot by @rjstevick for #TidyTuesday")
