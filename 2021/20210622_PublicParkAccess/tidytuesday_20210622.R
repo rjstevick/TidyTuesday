@@ -1,6 +1,6 @@
 # Public Park Access challenge tweets
 # TidyTuesday 2021 week 26
-# Rebecca Stevick updated 6/23/2021
+# Rebecca Stevick updated 8/4/2021
 
 # Load libraries -----------------
 library(tidyverse)
@@ -12,8 +12,8 @@ parks <- tuesdata$parks
 
 # Analysis and plotting ----------
 parks %>%
-   filter(year == 2020) %>% 
-   filter(pct_near_park_points >75) %>% 
+   filter(year == 2020) %>%
+   filter(pct_near_park_points >75) %>%
    ggplot(aes(y=pct_near_park_points, x=reorder(str_wrap(city,10),pct_near_park_points), fill=pct_near_park_points))+
    geom_col(color = "white")+
    coord_polar(clip = "off")+

@@ -1,6 +1,6 @@
 # London Animal Rescues
 # TidyTuesday 2021 week 27
-# Rebecca Stevick updated 6/29/2021
+# Rebecca Stevick updated 8/4/2021
 
 # Load libraries ---------------
 library(tidyverse) # for general data manipulation
@@ -20,13 +20,13 @@ animal_rescues %>%
    # clean up animal category
    mutate(animal_group_parent = case_when(animal_group_parent == "cat" ~ "Cat",
                                           grepl("Unknown", animal_group_parent) ~ "Unknown",
-                                          TRUE ~ animal_group_parent)) %>% 
+                                          TRUE ~ animal_group_parent)) %>%
    # count number of animals per year
-   group_by(cal_year, animal_group_parent) %>% count() %>% 
+   group_by(cal_year, animal_group_parent) %>% count() %>%
    # filter only animals with more than 10 rescued total
-   filter(sum(n)>10) %>% 
+   filter(sum(n)>10) %>%
    # divide counts by 10 for the waffle
-   mutate(n10=ceiling(n/10))  %>% ungroup() %>% 
+   mutate(n10=ceiling(n/10))  %>% ungroup() %>%
    ggplot(aes(label=animal_group_parent, values=n10, color=animal_group_parent))+
    geom_pictogram(n_rows = 8, size = 3.5, flip = TRUE, family = "FontAwesome5Free-Solid")+
    # separate plots by month
