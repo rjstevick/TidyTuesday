@@ -1,1 +1,1 @@
-![ParalympicMedals_plot.png](ParalympicMedals_plot.png)
+![BEAInfrastructure_plot.png](BEAInfrastructure_plot.png)
