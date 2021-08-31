@@ -13,6 +13,7 @@ https://github.com/rfordatascience/tidytuesday/
 
 | Week | Date | Data | Source | Link to code and plot |
 | :---: | :----: | :--- | :--- | :---: |
+| 36 | `2021-08-31` | [Bird Baths](data/2021/2021-08-31/readme.md) | [Cleary et al, 2016](https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0150899#abstract0) | <a href="2021/20210831_BirdBaths/tidytuesday_20210831.R"> <img src="2021/20210831_BirdBaths/BirdBaths_plot.png" width="400"></a>|
 | 35 | `2021-08-24` | [Lemurs](https://github.com/rfordatascience/tidytuesday/blob/master/data/2021/2021-08-24/readme.md) | [Kaggle](https://www.kaggle.com/jessemostipak/duke-lemur-center-data) | <a href="2021/20210824_Lemurs/tidytuesday_20210824.R"> <img src="2021/20210824_Lemurs/Lemurs_plot.png" width="400"></a>|
 | 34 | `2021-08-17` | [Star Trek Voice Commands](https://github.com/rfordatascience/tidytuesday/blob/master/data/2021/2021-08-17/readme.md) | [SpeechInteraction.org](http://www.speechinteraction.org/TNG/) | <a href="2021/20210817_StarTrekVoice/tidytuesday_20210817.R"> <img src="2021/20210817_StarTrekVoice/StarTrekVoice_plot.png" width="400"></a>|
 | 33 | `2021-08-10` | [BEA Infrastructure Investment](https://github.com/rfordatascience/tidytuesday/blob/master/data/2021/2021-08-10/readme.md) | [BEA](https://www.bea.gov/system/files/2021-01/infrastructure-data-may-2020.xlsx) | <a href="2021/20210810_BEAInfrastructure/tidytuesday_20210810.R"> <img src="2021/20210810_BEAInfrastructure/BEAInfrastructure_plot.png" width="400"></a>|
