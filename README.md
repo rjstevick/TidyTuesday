@@ -13,6 +13,8 @@ https://github.com/rfordatascience/tidytuesday/
 
 | Week | Date | Data | Source | Link to code and plot |
 | :---: | :----: | :--- | :--- | :---: |
+| 40 | `2021-09-28` | [NBER Papers](https://github.com/rfordatascience/tidytuesday/blob/master/data/2021/2021-09-28/readme.md) | [NBER](https://www.emmys.com/awards/nominations/award-search) |
+| 39 | `2021-09-21` | [Emmy Awards](https://github.com/rfordatascience/tidytuesday/blob/master/data/2021/2021-09-21/readme.md) | [Emmys](https://www.emmys.com/awards/nominations/award-search) |
 | 38 | `2021-09-14` | [Billboard Top 100](https://github.com/rfordatascience/tidytuesday/blob/master/data/2021/2021-09-14/readme.md) | [Data.World](https://data.world/kcmillersean/billboard-hot-100-1958-2017#) | <a href="2021/20210914_BillboardTop100/tidytuesday_20210914.R"> <img src="2021/20210914_BillboardTop100/BillboardTop100_plot.png" width="400"></a>|
 | 37 | `2021-09-07` | [Formula 1 Races](https://github.com/rfordatascience/tidytuesday/blob/master/data/2021/2021-09-07/readme.md) | [ergast.com/mrd/db](https://ergast.com/mrd/db/) | <a href="2021/20210907_Formula1Races/tidytuesday_20210907.R"> <img src="2021/20210907_Formula1Races/Formula1Races_plot.png" width="400"></a>|
 | 36 | `2021-08-31` | [Bird Baths](https://github.com/rfordatascience/tidytuesday/blob/master/data/2021/2021-08-31/readme.md) | [Cleary et al, 2016](https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0150899#abstract0) | <a href="2021/20210831_BirdBaths/tidytuesday_20210831.R"> <img src="2021/20210831_BirdBaths/BirdBaths_plot.png" width="400"></a>|
