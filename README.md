@@ -13,6 +13,7 @@ https://github.com/rfordatascience/tidytuesday/
 
 | Week | Date | Data | Source | Link to code and plot |
 | :---: | :----: | :--- | :--- | :---: |
+| 41 | `2021-10-05` | [Registered Nurses](https://github.com/rfordatascience/tidytuesday/blob/master/data/2021/2021-10-05/readme.md) | [Data.World](https://data.world/zendoll27/registered-nursing-labor-stats-1998-2020) |
 | 40 | `2021-09-28` | [NBER Papers](https://github.com/rfordatascience/tidytuesday/blob/master/data/2021/2021-09-28/readme.md) | [NBER](https://www.emmys.com/awards/nominations/award-search) |
 | 39 | `2021-09-21` | [Emmy Awards](https://github.com/rfordatascience/tidytuesday/blob/master/data/2021/2021-09-21/readme.md) | [Emmys](https://www.emmys.com/awards/nominations/award-search) |
 | 38 | `2021-09-14` | [Billboard Top 100](https://github.com/rfordatascience/tidytuesday/blob/master/data/2021/2021-09-14/readme.md) | [Data.World](https://data.world/kcmillersean/billboard-hot-100-1958-2017#) | <a href="2021/20210914_BillboardTop100/tidytuesday_20210914.R"> <img src="2021/20210914_BillboardTop100/BillboardTop100_plot.png" width="400"></a>|
